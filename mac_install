@@ -1,0 +1,9 @@
+sh config_git.sh
+
+echo -n "Modify .bashrc to show git HEAD position on prompt? Note: This will overwrite your PS1 environment variable! (y/n)? "
+old_stty_cfg=$(stty -g)
+stty raw -echo ; answer=$(head -c 1) ; stty $old_stty_cfg # Care playing with stty
+echo
+if echo "$answer" | grep -iq "^y" ;then
+	[ -z "$(cat ~/.bash_profile | grep parse_git_branch)" ] && cat git_branch_bashrc_addition >> ~/.bash_profile
+fi
